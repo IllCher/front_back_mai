@@ -1,0 +1,24 @@
+<!--В окне 2 элемента: элемент для ввода текста и кнопка. Вводится строка. По нажатию кнопки строка удваивается-->
+<!--имени формы и имени элемента-->
+<!--cпециальный метод addEventListener-->
+<head>
+    <script>
+        function doublestring(){
+            x = frm1.result.value
+            frm1.result.value = x + x
+        }
+    </script>
+    </head>
+    <body>
+    <br> Черненко Илья Денисович М8О-106М-22
+    <br> В окне 2 элемента: элемент для ввода текста и кнопка. Вводится строка. По нажатию кнопки строка удваивается
+    <form name='frm1'>
+        <br> x_d= <input name = 'result'>
+        <br> <input name = 'clickable' type='button' value='Удвоить строку'>
+    </form>
+    <script>
+        btn = document.getElementsByName('clickable')[0]
+        btn.addEventListener('click', doublestring)     
+    </script>
+    </body>
+    
