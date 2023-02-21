@@ -12,28 +12,33 @@
         }
     </style>
     <script>
-        var clear = true
+        var new_element = true
         function gen_html() {
             if (!base_form.myyear.value) {
             } else {
-                alert(5)
-                added_html = ''
-                added_html +=
+                    const element = document.getElementById('Div1')
+                    if (element) {
+                        element.remove()    
+                    }
+                    var added_html = document.createElement('div')
+                    added_html.setAttribute('id', 'Div1');
+                    new_element = !new_element    
+                added_html.innerHTML = ''
+                added_html.innerHTML +=
                     'Добрый день меня зовут ' + base_form.mysn.value + ' ' + base_form.myfn.value
                     + ', я ' + base_form.myyear.value + 'ого года рождения, '
                     + 'мой опыт работы ' + base_form.mynumber.value
                 if (Number(base_form.mynumber.value) == 1) {
-                    added_html += ' год'
+                    added_html.innerHTML += ' год'
                 } else if (Number(base_form.mynumber.value) < 5) {
-                    added_html += ' года'
+                    added_html.innerHTML += ' года'
                 } else {
-                    added_html += ' лет'
+                    added_html.innerHTML += ' лет'
                 }
-                added_html += ' готов работать с '
+                added_html.innerHTML += ' готов работать с '
                     + String(base_form.mytime.value) + ' мой пол ' + base_form.sex.value
                     + ' моя почта ' + base_form.myemail.value
-                document.body.innerHTML += added_html
-                clear = !clear
+                const appended = document.body.appendChild(added_html)
             }
         }
 
@@ -54,12 +59,12 @@
         <br> Фамилия <input name='mysn' type='text' required=True>
         <br> Имя <input name='myfn' type='text' required=True>
         <br> Почта <input name='myemail' type='email' required=True>
-        <br> Пол <input id='man' name='sex' type='radio' required=True> <label for='man'>Мужской</label> <input
-            id='woman' name='sex' type='radio' required=True> <label for='woman'>Женский</label>
+        <br> Пол <input id='man' name='sex' type='radio' required=True value = 'мужской'> <label for='man'>Мужской</label> <input
+            id='woman' name='sex' type='radio' required=True value = 'женский'> <label for='woman'>Женский</label>
 
 
         <br> Опыт работы<input name='mynumber' type='number' required=True min = 0 max = 100>
-        <br> <button id='btn_sbm' type='submit'> Отправить</button>
+        <br> <button id='btn_sbm' type='reset'> Отправить</button>
         <script>
             document.getElementById('btn_sbm').addEventListener('click', gen_html)     
         </script>
