@@ -1,0 +1,328 @@
+<!--Черненко Илья Денисович М8О-106М-22-->
+<!--Реализовать простой справочник на LocalStorage-->
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Registration Form</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    form {
+      margin: 2rem auto;
+      width: 80%;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    input[type="text"],
+    input[type="email"] {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+
+    input[type="radio"] {
+      margin-right: 0.5rem;
+    }
+
+    button[type="button"] {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 0.5rem 1rem;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button[type="button"]:hover {
+      background-color: #3e8e41;
+    }
+    table {
+      border-collapse: collapse;
+      width: 80%;
+      margin: 2rem auto;
+      font-size: 1rem;
+    }
+
+    th,
+    td {
+      text-align: left;
+      padding: 0.5rem;
+      border: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f2f2f2;
+      font-weight: normal;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    td:last-child {
+      text-align: center;
+    }
+
+    td:last-child button {
+      background-color: #f44336;
+      border: none;
+      color: white;
+      padding: 0.5rem;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 0.875rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    td:last-child button:hover {
+      background-color: #c62828;
+    }
+  </style>
+</head>
+
+<body>
+  <br> Черненко Илья Денисович М8О-106М-22
+  <br> Реализовать простой справочник на LocalStorage
+  <form id="form">
+    <label for="time">Time (24h format, e.g. 13:30):</label>
+    <input type="text" id="time" name="time" value="12:00" /><br />
+
+    <label for="sn">Surname:</label>
+    <input type="text" id="sn" name="sn" value="Doe" /><br />
+
+    <label for="fn">First Name:</label>
+    <input type="text" id="fn" name="fn" value="John" /><br />
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" value="john.doe@example.com" /><br />
+
+    <label for="sex">Sex:</label>
+    <input type="radio" id="man" name="sex" value="man" checked />
+    <label for="man">Man</label>
+    <input type="radio" id="woman" name="sex" value="woman" />
+    <label for="woman">Woman</label>
+    <br />
+
+    <button type="button" id="addBtn">Add</button>
+    <button type="button" id="clearBtn">Clear</button>
+    <button type="button" id="deleteByPosBtn">Delete by Position</button>
+    <button type="button" id="deleteByIdBtn">Delete by ID</button>
+  </form>
+
+  <table id="list">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Time</th>
+        <th>Surname</th>
+        <th>First Name</th>
+        <th>Email</th>
+        <th>Sex</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    const form = document.querySelector("#form");
+    const timeInput = document.querySelector("#time");
+    const snInput = document.querySelector("#sn");
+    const fnInput = document.querySelector("#fn");
+    const emailInput = document.querySelector("#email");
+    const manInput = document.querySelector("#man");
+    const womanInput = document.querySelector("#woman");
+    const addBtn = document.querySelector("#addBtn");
+    const clearBtn = document.querySelector("#clearBtn");
+    const list = document.querySelector("#list tbody");
+    const deleteByPosBtn = document.querySelector("#deleteByPosBtn");
+    const deleteByIdBtn = document.querySelector("#deleteByIdBtn");
+
+
+    const items = JSON.parse(localStorage.getItem("items")) || [];
+
+    function addItem() {
+      const timeValue = timeInput.value.trim();
+      const snValue = snInput.value.trim();
+      const fnValue = fnInput.value.trim();
+      const emailValue = emailInput.value.trim();
+      let sexValue;
+      if (manInput.checked) {
+        sexValue = manInput.value;
+      } else if (womanInput.checked) {
+        sexValue = womanInput.value;
+      }
+      if (timeValue !== "" && snValue !== "" && fnValue !== "" && emailValue !== "" && sexValue !== "") {
+        const id = addBtn.dataset.mode === "edit" ? parseInt(addBtn.dataset.id) : new Date().getTime();
+        const itemIndex = items.findIndex((item) => item.id === id);
+        const item = {
+          id: id,
+          time: timeValue,
+          sn: snValue,
+          fn: fnValue,
+          email: emailValue,
+          sex: sexValue
+        };
+        if (itemIndex === -1) {
+          items.push(item);
+        } else {
+          items[itemIndex] = item;
+        }
+        saveItems();
+        renderList();
+        clearForm();
+        addBtn.dataset.mode = "add";
+        addBtn.dataset.id = "";
+      }
+    }
+    
+    function deleteItem(id, pos) {
+      let index;
+      if (typeof pos !== "undefined") {
+        index = pos;
+      } else {
+        index = items.findIndex((item) => item.id === id);
+      }
+      if (index !== -1) {
+        items.splice(index, 1);
+        saveItems();
+        renderList();
+      }
+    }
+
+
+    function clearList() {
+      items.splice(0, items.length);
+      saveItems();
+      renderList();
+    }
+
+    function saveItems() {
+      localStorage.setItem("items", JSON.stringify(items));
+    }
+
+    function renderList() {
+      list.innerHTML = "";
+      items.forEach((item) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+              <td>${item.id}</td>
+              <td>${item.time}</td>
+              <td>${item.sn}</td>
+              <td>${item.fn}</td>
+              <td>${item.email}</td>
+              <td>${item.sex}</td>
+              <td>
+                <button type="button" data-id="${item.id}">Edit</button>
+                <button type="button" data-id="${item.id}">Delete</button>
+              </td>`;
+        list.appendChild(tr);
+      });
+    }
+
+    function clearForm() {
+      timeInput.value = "12:00";
+      snInput.value = "";
+      fnInput.value = "";
+      emailInput.value = "";
+      manInput.checked = true;
+      womanInput.checked = false;
+    }
+
+    function deleteItemByPos() {
+      const pos = prompt("Enter position number:");
+      if (pos !== null && pos !== "") {
+        const index = parseInt(pos) - 1;
+        if (index >= 0 && index < items.length) {
+          deleteItem(null, index);
+        } else {
+          alert("Invalid position number!");
+        }
+      }
+    }
+
+    function deleteItemById() {
+      const id = prompt("Enter ID:");
+      if (id !== null && id !== "") {
+        const item = items.find((item) => item.id === parseInt(id));
+        if (typeof item !== "undefined") {
+          deleteItem(item.id);
+        } else {
+          alert("Item not found!");
+        }
+      }
+    }
+
+    function editItem(id) {
+      const item = items.find((item) => item.id === id);
+      if (typeof item !== "undefined") {
+        timeInput.value = item.time;
+        snInput.value = item.sn;
+        fnInput.value = item.fn;
+        emailInput.value = item.email;
+        if (item.sex === "M") {
+          manInput.checked = true;
+          womanInput.checked = false;
+        } else {
+          manInput.checked = false;
+          womanInput.checked = true;
+        }
+        addBtn.dataset.mode = "edit";
+        addBtn.dataset.id = id;
+      }
+    }
+    
+    
+    
+
+    list.addEventListener("click", (e) => {
+      const id = parseInt(e.target.dataset.id);
+      if (e.target.tagName.toLowerCase() === "button") {
+        if (e.target.textContent === "Delete") {
+          deleteItem(id);
+        } else if (e.target.textContent === "Edit") {
+          editItem(id);
+        }
+      }
+    });
+    
+    addBtn.addEventListener("click", addItem);
+    deleteByPosBtn.addEventListener("click", deleteItemByPos);
+    deleteByIdBtn.addEventListener("click", deleteItemById);
+    clearBtn.addEventListener("click", () => {
+      list.innerHTML = "";
+      items.length = 0;
+      localStorage.setItem("items", JSON.stringify(items));
+    });
+    list.addEventListener("click", (e) => {
+      if (e.target.tagName.toLowerCase() === "button") {
+        const id = parseInt(e.target.dataset.id);
+        deleteItem(id);
+      }
+    });
+
+    renderList();
+  </script>
+</body>
+
+</html>

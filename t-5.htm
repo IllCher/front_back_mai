@@ -1,0 +1,211 @@
+<!--Черненко Илья Денисович М8О-106М-22-->
+<!--В HTML-документе определены 2 формы. 
+На первой управляющие кнопки и поля ввода, вторая  - пустая.
+При нажатии на кнопки первой формы на второй форме генерируются элементы (а).
+Параметры и количество элементов определяются в элементах 1-й формы(б),
+а также заданы в виде массивов на JavaScript.
+После построения элементов на второй форме по некоторым кнопкам/элементам
+можно произвести некоторые действия (в), результаты которых отображаются на 2-форме.
+Для генерации элементов и вывода результатов использовать свойство innerHTML.
+12.
+(а) TABLE из одного столбца, содержащих кнопки
+(б)В элементе SELECT указать число ячеек таблицы.
+(в)При нажатии на одну кнопку другие становятся недоступными
+Значения кнопок заданы в массиве-->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F5F5F5;
+            margin: 0;
+        }
+
+        h1 {
+            font-size: 2em;
+            color: #333333;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+            background-color: #FFFFFF;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        form {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #FFFFFF;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #333333;
+        }
+
+        select,
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #CCCCCC;
+            border-radius: 5px;
+            background-color: #FFFFFF;
+            color: #333333;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+
+        select:hover,
+        button:hover {
+            background-color: #F5F5F5;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        td {
+            padding: 10px;
+            border: 1px solid #CCCCCC;
+            background-color: #FFFFFF;
+            color: #333333;
+            font-size: 1em;
+            font-weight: bold;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        button[disabled] {
+            background-color: #CCCCCC;
+            color: #999999;
+            cursor: default;
+            box-shadow: none;
+        }
+
+        .result {
+            background-color: #FFFFFF;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .result p {
+            margin: 0;
+            font-size: 1.2em;
+            color: #333333;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+    <script>
+        // Определяем массивы для параметров элементов
+        var numCellsOptions = [1, 2, 3, 4, 5];
+        var buttonLabels = ["Button 1", "Button 2", "Button 3", "Button 4", "Button 5"];
+
+        function generateTable() {
+            // Получаем выбранное количество ячеек из списка
+            var selectElem = document.getElementById
+                ("numCellsSelect");
+            var numCells = selectElem.value;
+            // Создаем таблицу с заданным количеством ячеек
+            var tableElem = document.createElement("table");
+            for (var i = 0; i < numCells; i++) {
+                var trElem = document.createElement("tr");
+                var tdElem = document.createElement("td");
+                var buttonElem = document.createElement("button");
+                buttonElem.innerHTML = buttonLabels[i] || "Button " + (i + 1);
+                buttonElem.addEventListener("click", function () {
+                    // Получаем все кнопки в таблице
+                    var buttons = document.querySelectorAll("#form2 button");
+
+                    // Делаем все кнопки недоступными
+                    for (var i = 0; i < buttons.length; i++) {
+                        buttons[i].disabled = true;
+                    }
+                });
+                tdElem.appendChild(buttonElem);
+                trElem.appendChild(tdElem);
+                tableElem.appendChild(trElem);
+            }
+
+
+            // Вставляем таблицу во вторую форму
+            var form2Elem = document.getElementById("form2");
+            form2Elem.innerHTML = "";
+            form2Elem.appendChild(tableElem);
+        }
+
+        function showResults() {
+            // Получаем количество недоступных кнопок в таблице
+            var disabledButtons = document.querySelectorAll("#form2 button[disabled]");
+            var numDisabledButtons = disabledButtons.length;
+
+            // Формируем текст результата
+            var resultText = "Number of disabled buttons: " + numDisabledButtons;
+
+            // Создаем элемент для отображения результата
+            var resultElem = document.createElement("div");
+            resultElem.classList.add("result");
+            var pElem = document.createElement("p");
+            pElem.innerHTML = resultText;
+            resultElem.appendChild(pElem);
+
+            // Вставляем результат во вторую форму
+            var form2Elem = document.getElementById("form2");
+            form2Elem.appendChild(resultElem);
+        }
+    </script>
+    <br>Черненко Илья Денисович М8О-106М-22
+    <br>В HTML-документе определены 2 формы.
+    <br>На первой управляющие кнопки и поля ввода, вторая - пустая.
+    <br>При нажатии на кнопки первой формы на второй форме генерируются элементы (а).
+    <br>Параметры и количество элементов определяются в элементах 1-й формы(б),
+    а также заданы в виде массивов на JavaScript.
+    <br>После построения элементов на второй форме по некоторым кнопкам/элементам
+    можно произвести некоторые действия (в), результаты которых отображаются на 2-форме.
+    <br>Для генерации элементов и вывода результатов использовать свойство innerHTML.
+    <br>12.
+    <br>(а) TABLE из одного столбца, содержащих кнопки
+    <br>(б)В элементе SELECT указать число ячеек таблицы.
+    <br>(в)При нажатии на одну кнопку другие становятся недоступными
+    <br>Значения кнопок заданы в массиве.
+
+</head>
+
+<body>
+
+    <h1>Example</h1>
+    <form>
+        <label for="numCellsSelect">Number of cells in table:</label>
+        <select id="numCellsSelect">
+            <option value="">Select...</option>
+            <!-- Генерируем опции для выбора количества ячеек -->
+            <script>
+                for (var i = 0; i < numCellsOptions.length; i++) {
+                    document.write('<option value="' + numCellsOptions[i] + '">' + numCellsOptions[i] + '</option>');
+                }
+            </script>
+        </select>
+        <button type="button" onclick="generateTable()">Generate table</button>
+    </form>
+    <form id="form2">
+        <!-- Пустая форма для генерации элементов -->
+    </form>
+    <button type="button" onclick="showResults()">Show results</button>
+</body>
+
+</html>
+```

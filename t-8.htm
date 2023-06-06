@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>JSON Table Generator</title>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <br>Черненко Илья Денисович М8О-106М-22
+    <br>Задание t-8.На JS написать функцию, которая строит таблицу с данными о выбранных объектах. Колонок не менее 4-х. Получить те же данные через API по протоколу OpenData
+
+    <h1>JSON Table Generator</h1>
+    <form>
+      <label for="json-upload">Upload a JSON file:</label>
+      <input type="file" id="json-upload" accept=".json" />
+      <br />
+      <button type="button" onclick="generateTableFromJSON()">Generate Table</button>
+    </form>
+    <br />
+    <p>Or generate a table from the open data protocol provided by <a href="https://data.mos.ru/">data.mos.ru</a>:</p>
+    <button type="button" onclick="redirectToOpenData()">Generate Table from Data.Mos.Ru</button>
+    <br />
+    <div id="table-container"></div>
+
+    <script>
+        function generateTableFromJSON() {
+            var fileInput = document.getElementById("json-upload");
+            var file = fileInput.files[0];
+            var reader = new FileReader();
+            reader.onload = function(event) {
+              var jsonData = JSON.parse(event.target.result);
+              var tableHtml = "";
+              if (document.getElementById("json-table")) {
+                // table already exists, only update table body
+                for (var i = 0; i < jsonData.length; i++) {
+                  tableHtml += "<tr>";
+                  for (var prop in jsonData[i]) {
+                    var propValue = jsonData[i][prop];
+                    if (typeof propValue === "object") {
+                      propValue = JSON.stringify(propValue);
+                    }
+                    tableHtml += "<td>" + propValue + "</td>";
+                  }
+                  tableHtml += "</tr>";
+                }
+                document.getElementById("json-table-body").innerHTML = tableHtml;
+              } else {
+                // create new table with headers and data
+                tableHtml = "<table id='json-table'><thead><tr>";
+                for (var header in jsonData[0]) {
+                  tableHtml += "<th>" + header + "</th>";
+                }
+                tableHtml += "</tr></thead><tbody id='json-table-body'>";
+                for (var i = 0; i < jsonData.length; i++) {
+                  tableHtml += "<tr>";
+                  for (var prop in jsonData[i]) {
+                    var propValue = jsonData[i][prop];
+                    if (typeof propValue === "object") {
+                      propValue = JSON.stringify(propValue);
+                    }
+                    tableHtml += "<td>" + propValue + "</td>";
+                  }
+                  tableHtml += "</tr>";
+                }
+                tableHtml += "</tbody></table>";
+                document.getElementById("table-container").innerHTML = tableHtml;
+              }
+            };
+            reader.readAsText(file);
+          }
+          
+          function redirectToOpenData() {
+            window.location.href = "https://apidata.mos.ru/v1/datasets/658/rows?api_key=e38a09e51c49f1ff805acaa5372e957d";
+          }
+          
+          
+    </script>
+  </body>
+</html>

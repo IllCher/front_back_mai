@@ -1,0 +1,133 @@
+<!--Черненко Илья Денисович М8О-106М-22-->
+<!--
+Задание 10. React
+    1) Выполнить одно из заданий B1-B8, C1-C13 по выбору</li>
+    2) Выполнить 3 задание из Задачника (по одному из разделов 2, 3, 4)</li>
+-->
+<br>Черненко Илья Денисович М8О-106М-22
+Задание 10. React
+<ol>
+    <li>Выполнить одно из заданий B1-B8, C1-C13 по выбору</li>
+    <li>Выполнить 3 задание из Задачника (по одному из разделов 2, 3, 4)</li>
+</ol>
+<br> 1 Пункт
+<br> Создать компоненты:
+* header - шапка, принимает логотип (ссылка на любую картинку в инете) и название сайта
+* nav - пункты меню (штук 5 передай в виде массива [{title: 'Новости', link: '/news'}, {...}])
+* footer - копирайты и динимически вычисляемый год: @copyright все права защищены {текущий год} год. B2:
+
+<script>
+    import React from 'react';
+
+    // Компонент шапки
+    const Header = ({ logo, title }) => {
+        return (
+            <header>
+                <img src={logo} alt="Logo" />
+                <h1>{title}</h1>
+            </header>
+        );
+    };
+
+    // Компонент навигации
+    const Nav = ({ menuItems }) => {
+        return (
+            <nav>
+                <ul>
+                    {menuItems.map((item, index) => (
+                        <li key={index}>
+                            <a href={item.link}>{item.title}</a>
+                        </li>
+                    ))}
+                </ul>
+            </nav>
+        );
+    };
+
+    // Компонент подвала
+    const Footer = () => {
+        const currentYear = new Date().getFullYear();
+
+        return (
+            <footer>
+                <p>
+                    &copy; Все права защищены {currentYear} год.
+                </p>
+            </footer>
+        );
+    };
+
+    export { Header, Nav, Footer };
+
+
+</script>
+
+<br> Создать компонент, который принимает массив текстов. Выводим каждый текст в отдельном блоке, но текст по умолчанию
+скрыт, но в блоке есть кнопка показать текст. При нажатии на кнопку, конкретный текст появляется, а если были открыты
+другие текста, то они скрываются. C9:
+
+<script>
+    import React, { useState } from 'react';
+
+    const TextBlocks = ({ texts }) => {
+        const [activeIndex, setActiveIndex] = useState(null);
+
+        const handleToggle = (index) => {
+            setActiveIndex((prevIndex) => (prevIndex === index ? null : index));
+        };
+
+        return (
+            <div>
+                {texts.map((text, index) => (
+                    <div key={index} style={{ marginBottom: '10px' }}>
+                        <button onClick={() => handleToggle(index)}>
+                            {activeIndex === index ? 'Скрыть текст' : 'Показать текст'}
+                        </button>
+                        {activeIndex === index && <p>{text}</p>}
+                    </div>
+                ))}
+            </div>
+        );
+    };
+
+    export default TextBlocks;
+
+</script>
+
+<br> 2 Пункт
+<br> 2.1.1 Дана некоторая строка. Найдите позицию первого нуля в строке.
+
+<script>
+    const str = "1111011101111";
+    const firstZeroIndex = str.indexOf("0");
+
+    console.log("Позиция первого нуля:", firstZeroIndex);
+
+</script>
+
+<br> 3.1.2 Дан массив: [1, '', 2, 3, '', 5] Удалите из массива все пустые строки.
+
+<script>
+    const array = [1, '', 2, 3, '', 5];
+    const filteredArray = array.filter((element) => element !== '');
+
+    console.log(filteredArray);
+
+</script>
+
+<br> 4.1.3 Сделайте функцию, которая параметром будет принимать секунды, а возвращать количество суток, соответствующих этим секундам.
+
+<script>
+    function secondsToDays(seconds) {
+        const secondsInDay = 24 * 60 * 60; // количество секунд в одном дне
+        const days = Math.floor(seconds / secondsInDay); // округленное количество суток
+        
+        return days;
+      }
+      
+      // Пример использования
+      const totalSeconds = 172800; // 2 суток (2 * 24 * 60 * 60)
+      const days = secondsToDays(totalSeconds);
+      console.log(days); // Вывод: 2
+      
+</script>

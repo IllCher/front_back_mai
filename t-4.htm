@@ -1,0 +1,191 @@
+<!--Черненко Илья Денисович М8О-106М-22-->
+<!--Разработать 2-3 примера с использованием JQuery, который включал бы функции из разделов-->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery Example</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #f2f2f2;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 2em;
+        }
+
+        main {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 20px auto;
+            max-width: 960px;
+        }
+
+        .box {
+            background-color: blue;
+            color: white;
+            font-size: 1.2em;
+            height: 50px;
+            margin: 10px;
+            padding: 10px;
+            text-align: center;
+            width: 100px;
+        }
+
+        .box:hover {
+            background-color: #007bff;
+            cursor: pointer;
+        }
+
+        .wrapper {
+            background-color: #f2f2f2;
+            border: 1px solid #ddd;
+            display: inline-flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 20px auto;
+            max-width: 960px;
+            padding: 10px;
+        }
+
+        input {
+            border: 1px solid #ddd;
+            font-size: 1.2em;
+            height: 30px;
+            margin-right: 10px;
+            padding: 5px;
+            width: 200px;
+        }
+
+        button {
+            background-color: #007bff;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-size: 1.2em;
+            padding: 10px;
+        }
+
+        button:hover {
+            background-color: #0062cc;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            margin-top: auto;
+        }
+
+        p {
+            font-size: 1.2em;
+            margin: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <br> Черненко Илья Денисович М8О-106М-22
+    <br> Разработать 2-3 примера с использованием JQuery, который включал бы функции из разделов
+    
+    <br>1: val()
+    <br>2: width(), innerWidth(), outerWidth()
+    <br>3: :button
+    <br>4: width()
+    <br>5: wrap(), wrapAll()
+    <br>6: nextAll()
+    <br>7: unbind()
+    <br>8: mouseover()
+    <br>9: keyup()
+    <br>10: jQuery.fx.interval
+    <header>
+        <h1>jQuery Example</h1>
+    </header>
+    <main>
+        <div class="box">Box 1</div>
+        <div class="box">Box 2</div>
+        <div class="box">Box 3</div>
+    </main>
+    <div class="wrapper">
+        <input type="text" placeholder="Enter text...">
+        <button>Click me</button>
+    </div>
+    <footer>
+        <p>&copy; 2023 jQuery Example</p>
+    </footer>
+    <script>
+        // 1: val()
+        $("button").click(function () {
+            var value = $("input").val();
+            alert("The input value is: " + value);
+            // 7: unbind()
+            $("button").unbind("click");
+        });
+
+        // 2: width(), innerWidth(), outerWidth()
+        var boxWidth = $(".box").width();
+        var boxInnerWidth = $(".box").innerWidth();
+        var boxOuterWidth = $(".box").outerWidth();
+        console.log("Box width: " + boxWidth);
+        console.log("Box inner width: " + boxInnerWidth);
+        console.log("Box outer width: " + boxOuterWidth);
+
+        // 3: :button
+        $(":button").css("background-color", "red");
+
+        // 4: width()
+        $(".box").width(150);
+
+        // 5: wrap(), wrapAll()
+        $(".box").wrap("<div class='wrapper'></div>");
+        $(".box").wrapAll("<div class='wrapper'></div>");
+
+        // 6: nextAll()
+        $(".box:first").nextAll().css("background-color", "green");
+
+        // 7: unbind()
+        //$("button").unbind("click");
+
+        // 8: mouseover()
+        $(".box").mouseover(function () {
+            $(this).css("background-color", "#007bff");
+        });
+
+        // 9: keyup()
+        $("input").keyup(function () {
+            var value = $(this).val();
+            $(".box").text(value);
+        });
+
+        // 10: jQuery.fx.interval
+        jQuery.fx.interval = 100;
+
+          
+    </script>
+</body>
+
+</html>

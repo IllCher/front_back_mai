@@ -1,0 +1,270 @@
+<!--Черненко Илья Денисович М8О-106М-22-->
+<!--Задание t-6. Bootstrap
+Оформить интерфейс одного из предыдущих заданий в стилях  Bootstrap.
+Использовать выбранные возможности согласно варианту.
+-->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>My Bootstrap Web Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.1/css/bootstrap.min.css"
+        integrity="sha512-zv+4ae4/qmKjSFlBtS1SRe8ZKwpeZBt4ksazf4AC4I8KAmW9ujHMFyx1IcGpt3q8PfWLMjv2UsTg/cLzUNn8bg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+        <style>
+            body {
+              background-color: #f8f9fa;
+            }
+      
+            h1 {
+              font-size: 4rem;
+              font-weight: bold;
+              margin-top: 3rem;
+              margin-bottom: 1.5rem;
+              text-align: center;
+              color: #0275d8;
+            }
+      
+            p {
+              font-size: 1.2rem;
+              line-height: 1.5;
+              color: #343a40;
+            }
+      
+            a {
+              color: #0275d8;
+            }
+      
+            nav {
+              position: sticky;
+              top: 0;
+              z-index: 999;
+            }
+      
+            #navbarNav a {
+              font-size: 1.2rem;
+              color: #343a40;
+              transition: all 0.3s ease;
+            }
+      
+            #navbarNav a:hover {
+              color: #0275d8;
+            }
+      
+            .jumbotron {
+              background-image: url("https://picsum.photos/1200/600?random=1");
+              background-size: cover;
+              background-position: center center;
+              height: 100vh;
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              text-align: center;
+              color: #fff;
+            }
+      
+            .jumbotron h2 {
+              font-size: 3rem;
+              font-weight: bold;
+              margin-bottom: 2rem;
+            }
+      
+            .card {
+              box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+              transition: all 0.3s ease;
+            }
+      
+            .card:hover {
+              transform: translateY(-0.25rem);
+              box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
+            }
+      
+            .card-title {
+              font-size: 1.5rem;
+              font-weight: bold;
+              margin-bottom: 1rem;
+              color: #343a40;
+            }
+      
+            .card-text {
+              font-size: 1.2rem;
+              line-height: 1.5;
+              color: #6c757d;
+            }
+      
+            footer {
+              color: #fff;
+              padding-top: 2rem;
+              padding-bottom: 2rem;
+            }
+      
+            .form-control {
+              font-size: 1.2rem;
+              border-radius: 0;
+              color: #343a40;
+            }
+      
+            .btn-primary {
+              font-size: 1.2rem;
+              border-radius: 0;
+              background-color: #0275d8;
+              border-color: #0275d8
+            }
+
+            .btn-primary:hover {
+              background-color: #025aa5;
+              border-color: #025aa5;
+            }
+          
+            @media (min-width: 992px) {
+              .jumbotron {
+                height: calc(100vh - 56px);
+              }
+          
+              #navbarNav {
+                display: flex;
+                justify-content: flex-end;
+              }
+          
+              #navbarNav a {
+                margin-left: 2rem;
+              }
+          
+              .card-deck {
+                display: flex;
+                flex-wrap: wrap;
+              }
+          
+              .card {
+                flex: 1 0 22rem;
+                margin-right: 1rem;
+                margin-bottom: 1rem;
+              }
+          
+              .card:last-child {
+                margin-right: 0;
+              }
+            }
+          </style>
+</head>
+
+<br>Черненко Илья Денисович М8О-106М-22
+<br>Задание t-6. Bootstrap
+Оформить интерфейс одного из предыдущих заданий в стилях  Bootstrap.
+Использовать выбранные возможности согласно варианту.
+
+
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">My Website</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#services">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <header id="home" class="container-fluid text-center">
+        <h1>Welcome to My Website</h1>
+        <p>This is a simple Bootstrap web page.</p>
+        <button type="button" class="btn btn-primary">Learn More</button>
+    </header>
+    <main id="about" class="container">
+        <h2>About Us</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis euismod, libero vel posuere sagittis, eros ante
+            accumsan lacus, in finibus purus ipsum vel nulla. Praesent ullamcorper purus a lacinia sagittis. Etiam ut
+            nibh nibh. Donec ut massa malesuada, laoreet massa eget, molestie quam. Sed eleifend, sapien ac pharetra
+            ullamcorper, quam ipsum laoreet nisi, at posuere orci lectus nec eros.</p>
+        <p>Etiam ornare nibh ac odio placerat commodo. Sed bibendum mi nec lacus hendrerit lobortis. Ut malesuada orci
+            nisl, ut sollicitudin purus gravida ac. Suspendisse potenti. Curabitur nec elit massa. Nulla lacinia orci
+            lectus, ac euismod justo dapibus vitae. Integer eu tellus ut nisi suscipit congue vitae ut quam. Integer
+            ultrices erat ut magna viverra, a luct
+            us odio vehicula. Donec eu tincidunt nunc. Sed volutpat elit vitae elit vestibulum, ac feugiat lectus
+            mattis.</p>
+    </main>
+    <section id="services" class="container-fluid bg-light">
+        <div class="container">
+            <h2>Our Services</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Service 1</h3>
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis euismod,
+                                libero vel posuere sagittis.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Service 2</h3>
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis euismod,
+                                libero vel posuere sagittis.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Service 3</h3>
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis euismod,
+                                libero vel posuere sagittis.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer id="contact" class="container-fluid bg-dark text-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>Contact Us</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis euismod, libero vel posuere
+                        sagittis.</p>
+                    <ul class="list-unstyled">
+                        <li><i class="bi bi-envelope"></i> email@example.com</li>
+                        <li><i class="bi bi-phone"></i> (123) 456-7890</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h3>Subscribe</h3>
+                    <p>Subscribe to our newsletter to receive updates and special offers.</p>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Enter your email address"
+                            aria-label="Enter your email address" aria-describedby="button-addon2">
+                        <button class="btn btn-primary" type="button" id="button-addon2">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <p class="text-center">Copyright © 2023.
+        </div>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.1/js/bootstrap.min.js"
+        integrity="sha512-sZd0duq6N5U6HvmUblvEY6c5z+hBmJbcKbSHCv9XOcZ+OCCal1L88hjvBzD2QOebBhJPTxjPbLZ9pE/v+GsglQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+</body>
+
+</html>
