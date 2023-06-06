@@ -11,7 +11,7 @@ h1 {
 }
 
 .carousel-container {
-  max-width: 800px; /* Increase the value to take more space */
+  max-width: 1000px; /* Increase the value to take more space */
   margin: 0 auto;
   animation: fadeIn 1s ease-in-out;
 }

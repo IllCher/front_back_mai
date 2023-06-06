@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-const multer = require('multer');
+const axios = require('axios');
+const fs = require('fs');
 const path = require('path');
 
 const app = express();
@@ -8,26 +9,27 @@ const app = express();
 // Enable Cross-Origin Resource Sharing
 app.use(cors());
 
-// Configure multer for handling file uploads
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, __dirname);
-  },
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    const filename = Date.now() + ext;
-    cb(null, filename);
-  },
-});
-const upload = multer({ storage });
+// Define a route to handle image downloads
+app.get('/api/download', async (req, res) => {
+  const imageUrl = req.query.url;
+  const imageFilename = path.basename(imageUrl);
+  const imagePath = path.join(__dirname, imageFilename);
 
-// Define a route to handle image uploads
-app.post('/api/upload', upload.single('image'), (req, res) => {
-  if (!req.file) {
-    return res.status(400).json({ message: 'No image file provided' });
+  try {
+    const response = await axios.get(imageUrl, { responseType: 'stream' });
+    response.data.pipe(fs.createWriteStream(imagePath));
+    response.data.on('end', () => {
+      res.download(imagePath, 'kitten.jpg', (error) => {
+        if (error) {
+          console.error('Error downloading image:', error);
+        }
+        fs.unlinkSync(imagePath); // Remove the temporary file
+      });
+    });
+  } catch (error) {
+    console.error('Error downloading image:', error);
+    res.status(500).json({ error: 'Failed to download image' });
   }
-
-  res.status(200).json({ message: 'Image uploaded successfully' });
 });
 
 const port = 5000;
