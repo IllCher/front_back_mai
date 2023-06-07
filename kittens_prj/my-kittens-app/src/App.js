@@ -11,7 +11,7 @@ function App() {
   const [opacity, setOpacity] = useState(100);
   const [zoomLevel, setZoomLevel] = useState(1);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-
+  const [showMewButton, setShowMewButton] = useState(false);
 
   useEffect(() => {
     fetchKittenImages();
@@ -55,9 +55,13 @@ function App() {
       }
     }
   };
-  
+
   const handleBrightnessChange = (event) => {
-    setBrightness(parseInt(event.target.value));
+    const newBrightness = parseInt(event.target.value);
+    setBrightness(newBrightness);
+
+    // Toggle showMewButton based on brightness value
+    setShowMewButton(newBrightness === 0);
   };
 
   const handleOpacityChange = (event) => {
@@ -83,8 +87,12 @@ function App() {
       filter: filterValue,
     };
   };
-  
-  
+
+  const playMewSound = () => {
+    const audio = new Audio('/cat-mew.mp3');
+    audio.play();
+  };
+
   return (
     <div className="app">
       <h1>Kitten Carousel</h1>
@@ -148,6 +156,11 @@ function App() {
             onChange={handleOpacityChange}
           />
         </div>
+        {showMewButton && (
+          <button className="custom-button" onClick={playMewSound}>
+            Mew!
+          </button>
+        )}
       </div>
     </div>
   );
