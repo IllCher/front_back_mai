@@ -10,6 +10,8 @@ function App() {
   const [brightness, setBrightness] = useState(100);
   const [opacity, setOpacity] = useState(100);
   const [zoomLevel, setZoomLevel] = useState(1);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+
 
   useEffect(() => {
     fetchKittenImages();
@@ -53,11 +55,7 @@ function App() {
       }
     }
   };
-
-  const handleImageSelect = (index) => {
-    setSelectedImage(kittenImages[index]);
-  };
-
+  
   const handleBrightnessChange = (event) => {
     setBrightness(parseInt(event.target.value));
   };
@@ -75,15 +73,18 @@ function App() {
   });
 
   const getCarouselItemStyle = (index) => {
-    const isSelected = selectedImage === kittenImages[index];
-    const transformValue = isSelected ? `scale(${zoomLevel})` : 'none';
+    const isSelected = index === selectedImageIndex;
+    const transformValue = isSelected ? `scale(${zoomLevel})` : 'scale(1)';
     const zIndexValue = isSelected ? 1 : 0;
+    const filterValue = `brightness(${isSelected ? brightness : 100}%) opacity(${isSelected ? opacity : 100}%)`;
     return {
       transform: transformValue,
       zIndex: zIndexValue,
+      filter: filterValue,
     };
   };
-
+  
+  
   return (
     <div className="app">
       <h1>Kitten Carousel</h1>
@@ -95,7 +96,7 @@ function App() {
           interval={10000}
           style={{ height: '80vh' }}
           selectedItem={kittenImages.indexOf(selectedImage)}
-          onClickItem={handleImageSelect}
+          onChange={(index) => setSelectedImageIndex(index)}
         >
           {kittenImages.map((image, index) => (
             <div key={index} className="carousel-item" style={getCarouselItemStyle(index)}>
